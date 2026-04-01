@@ -1,0 +1,133 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Custom CSS Variables ─────────────────────────────────────────── */
+:root {
+  --c-cyan:    #00ffff;
+  --c-magenta: #ff00aa;
+  --c-gold:    #ffe600;
+  --c-violet:  #7700ff;
+  --c-emerald: #00ff88;
+  --c-fire:    #ff4400;
+}
+
+/* ── Base ─────────────────────────────────────────────────────────── */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-white dark:bg-black text-black dark:text-white;
+  font-family: 'Exo 2', sans-serif;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── Scrollbar ────────────────────────────────────────────────────── */
+::-webkit-scrollbar       { width: 4px; }
+::-webkit-scrollbar-track { background: #000; }
+::-webkit-scrollbar-thumb { background: var(--c-cyan); border-radius: 2px; }
+
+/* ── Custom cursor ────────────────────────────────────────────────── */
+#cursor {
+  position: fixed;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--c-cyan);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: border-color 0.2s, width 0.2s, height 0.2s, background 0.2s;
+  mix-blend-mode: difference;
+}
+#cursor.hover {
+  width: 36px;
+  height: 36px;
+  border-color: var(--c-magenta);
+  background: rgba(255, 0, 170, 0.08);
+}
+#cursor-dot {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  background: var(--c-cyan);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+}
+
+/* ── Text stroke utility ──────────────────────────────────────────── */
+.text-stroke-responsive {
+  -webkit-text-stroke: 1px currentColor;
+}
+
+/* ── Scanlines overlay ────────────────────────────────────────────── */
+.scanlines {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 255, 255, 0.012) 2px,
+    rgba(0, 255, 255, 0.012) 4px
+  );
+  pointer-events: none;
+}
+
+/* ── Glow utilities ───────────────────────────────────────────────── */
+.glow-cyan    { box-shadow: 0 0 20px rgba(0,255,255,0.5),   0 0 60px rgba(0,255,255,0.15); }
+.glow-magenta { box-shadow: 0 0 20px rgba(255,0,170,0.5),   0 0 60px rgba(255,0,170,0.15); }
+.glow-gold    { box-shadow: 0 0 20px rgba(255,230,0,0.5),   0 0 60px rgba(255,230,0,0.15); }
+
+/* ── Gradient border animation ────────────────────────────────────── */
+@keyframes borderFlow {
+  to { background-position: 300% 0; }
+}
+.border-flow {
+  background: linear-gradient(90deg, var(--c-cyan), var(--c-magenta), var(--c-violet), var(--c-cyan));
+  background-size: 300%;
+  animation: borderFlow 3s linear infinite;
+}
+
+/* ── Glitch animation ─────────────────────────────────────────────── */
+@keyframes glitch1 {
+  0%, 88%, 100% { opacity: 0; }
+  90%  { opacity: 0.9; transform: translate(-8px, -2px); }
+  93%  { opacity: 0.9; transform: translate(3px, 1px); }
+  95%  { opacity: 0; }
+}
+@keyframes glitch2 {
+  0%, 84%, 100% { opacity: 0; }
+  86% { opacity: 0.9; transform: translate(8px, 2px); }
+  89% { opacity: 0.9; transform: translate(-3px, -1px); }
+  91% { opacity: 0; }
+}
+
+/* ── Fade up animation ────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up { animation: fadeUp 1s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* ── Floating rune animation ──────────────────────────────────────── */
+@keyframes runeFloat {
+  0%   { transform: translateY(110vh) rotate(0deg);   opacity: 0; }
+  10%  { opacity: 0.18; }
+  90%  { opacity: 0.18; }
+  100% { transform: translateY(-80px) rotate(600deg); opacity: 0; }
+}
+.rune {
+  position: absolute;
+  pointer-events: none;
+  animation: runeFloat linear infinite;
+  opacity: 0;
+}
